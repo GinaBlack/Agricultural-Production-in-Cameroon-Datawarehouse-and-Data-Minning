@@ -1,6 +1,7 @@
 import mysql.connector
 import pandas as pd
 import matplotlib.pyplot as plt
+from mysql.connector import Error
 
 # Database connection details
 def connect_to_database():
@@ -63,13 +64,13 @@ queries = {
     },
     "Total Production by Crop and Climate Type": {
         "query": """
-            SELECT cl.Climate_Name, c.Crop_Name, SUM(p.Quantity) AS Total_Production
+            SELECT c.Climate_Name, c.Crop_Name, SUM(p.Quantity) AS Total_Production
             FROM production_fact p
             JOIN crop_dim c ON p.Crop_ID = c.Crop_ID
             JOIN region_dim r ON p.Region_ID = r.Region_ID
-            JOIN climate_dim c ON r.Climate_ID = cl.Climate_ID
-            GROUP BY cl.Climate_Name, c.Crop_Name
-            ORDER BY cl.Climate_Name, c.Crop_Name;
+            JOIN climate_dim c ON r.Climate_ID = c.Climate_ID
+            GROUP BY c.Climate_Name, c.Crop_Name
+            ORDER BY c.Climate_Name, c.Crop_Name;
         """,
         "purpose": "Evaluates total crop production for each crop type under different climate conditions."
     },
