@@ -1,0 +1,5 @@
+SELECT Crop_Type, SUM(Quantity) AS TotalProduction, Time_ID
+FROM Production_Fact
+JOIN Crop_Dim ON Production_Fact.Crop_ID = Crop_Dim.Crop_ID 
+GROUP BY Crop_Type,Time_ID
+ORDER BY Time_ID, TotalProduction DESC;
