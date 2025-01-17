@@ -63,6 +63,10 @@ def main():
         ]
         result_df = merged_df[final_columns].copy()
 
+        # Remove duplicate rows
+        result_df = result_df.drop_duplicates()
+        logging.info("Duplicate rows have been removed.")
+
         # Normalize 'Quantity' column and remove outliers using Z-score
         result_df['Quantity_zscore'] = zscore(result_df['Quantity'])
         result_df = result_df[result_df['Quantity_zscore'].abs() <= 3].copy()
